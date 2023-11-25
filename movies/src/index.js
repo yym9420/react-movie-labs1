@@ -8,6 +8,8 @@ import HomePage from "./pages/homePage";
 import MoviePage from "./pages/movieDetailsPage";
 import FavoriteMoviesPage from "./pages/favoriteMoviesPage";
 import UpcomingMoviesPage from "./pages/upcomingMoviesPage";
+import TopRatedMoviesPage from './pages/topRatedMoviesPage';
+import NowPlayingMoviesPage from './pages/nowPlayingMoviesPage';
 import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from 'react-query/devtools';
 import MoviesContextProvider from "./contexts/moviesContext";
@@ -27,10 +29,10 @@ const App = () => {
         <SiteHeader />
         <MoviesContextProvider>
         <Routes>
-          <Route path="/movies/favorites" element={<FavoriteMoviesPage />} 
-/>
-           <Route path="/movies/upcoming" element={<UpcomingMoviesPage 
-/>}/>
+          <Route path="/movies/favorites" element={<FavoriteMoviesPage />} />
+          <Route path="/movies/upcoming" element={<UpcomingMoviesPage />}/>
+          <Route path="/movies/nowPlaying" element={<NowPlayingMoviesPage />} />
+          <Route path="/movies/topRated" element={<TopRatedMoviesPage />} />
           <Route path="/reviews/:id" element={ <MovieReviewPage /> } />
           <Route path="/movies/:id" element={<MoviePage />} />
           <Route path="/" element={<HomePage />} />

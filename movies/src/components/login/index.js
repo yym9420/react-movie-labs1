@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Alert from '@mui/material/Alert';
 import { Link, useNavigate } from 'react-router-dom';
-
+import { useAuth } from '../../contexts/authContext';
 const Login = () => {
   const emailRef = useRef();
   const passwordRef = useRef();

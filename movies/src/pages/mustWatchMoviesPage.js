@@ -6,45 +6,44 @@ import { getMovie } from "../api/tmdb-api";
 import Spinner from '../components/spinner'
 import RemoveFromMustWatches from '../components/cardIcons/removeFromMustWatches.js'
 
-const useMustWatchMovieQueries = (movieIds) => {
-  return useQueries(
-    movieIds.map((movieId) => ({
-      queryKey: ["movie", { id: movieId }],
-      queryFn: getMovie,
-    }))
-  );
-};
-
 const MustWatchMoviesPage = () => {
-  const { mustWatches: movieIds } = useContext(MoviesContext);
+  const {mustWatches: movieIds } = useContext(MoviesContext);
 
-  const movieQueries = useMustWatchMovieQueries(movieIds);
+  const mustWatchMovieQueries = useQueries(
+    movieIds.map((movieId) => {
+      return {
+        queryKey: ["movie", { id: movieId }],
+        queryFn: getMovie,
+      };
+    })
+  );
 
-  if (movieQueries.some((query) => query.isLoading)) {
+  const isLoading = mustWatchMovieQueries.find((m) => m.isLoading === 
+true);
+
+  if (isLoading) {
     return <Spinner />;
   }
 
-  const movies = movieQueries.map((query) => {
-    if (query.isError) {
-      
-      console.error(`Failed to fetch movie with id 
-${query.queryKey[1].id}`);
-      return null;
-    }
-
-    return {
-      ...query.data,
-      genre_ids: query.data.genres.map((genre) => genre.id),
-    };
-  }).filter(Boolean);
+  const movies = mustWatchMovieQueries.map((q) => {
+    q.data.genre_ids = q.data.genres.map(g => g.id)
+    return q.data
+  });
 
   return (
     <PageTemplate
-      title="Must Watch Movies"
+      title="MustWach Movies"
       movies={movies}
-      action={(movie) => <RemoveFromMustWatches movie={movie} />}
+      action={(movie) => {
+        return (
+          <>
+            <RemoveFromMustWatches movie={movie} />
+          </>
+        );
+      }}
     />
   );
 };
 
 export default MustWatchMoviesPage;
+

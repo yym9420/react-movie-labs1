@@ -4,32 +4,37 @@ import { getPeopleList } from "../api/tmdb-api";
 import PageTemplate from '../components/templatePeopleListPage';
 import { useQuery } from 'react-query';
 import Spinner from '../components/spinner';
+import { Pagination } from '@mui/material';
 import { Grid } from '@mui/material';
-import Paginator from '../components/Paginator'; // 引入 Paginator 组件
+
 
 const PeoplePage = () => {
   const { page } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
-
-  
-  const getQueryParam = (param) => {
-    const queryParams = new URLSearchParams(location.search);
-    return queryParams.get(param);
-  };
-
-  const initialPage = Number(getQueryParam('page')) || 1;
+  const queryParams = new URLSearchParams(location.search);
+  const initialPage = Number(queryParams.get('page')) || 1;
 
   const { data, error, isLoading, isError, refetch } = useQuery(['people', 
-{ page }], getPeopleList);
+{ page }], getPeopleList)
 
   const [currentPage, setCurrentPage] = useState(initialPage);
+  const totalPages = 10;
 
-  
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
     refetch({ page: newPage });
     navigate(`/people/page/${newPage}`);
+  };
+
+  const Paginator = ({ currentPage, totalPages, onPageChange }) => {
+    return (
+      <Pagination
+        count={totalPages}
+        page={currentPage}
+        onChange={(event, page) => onPageChange(page)}
+      />
+    );
   };
 
   useEffect(() => {
@@ -55,13 +60,15 @@ const PeoplePage = () => {
       />
       <Grid container justifyContent="center">
         <Grid item>
-          
-          <Paginator currentPage={currentPage} 
-onPageChange={handlePageChange} />
+          <Paginator
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
         </Grid>
       </Grid>
     </>
   );
 };
-
 export default PeoplePage;
+

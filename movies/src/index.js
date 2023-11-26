@@ -10,7 +10,11 @@ import FavoriteMoviesPage from "./pages/favoriteMoviesPage";
 import UpcomingMoviesPage from "./pages/upcomingMoviesPage";
 import TopRatedMoviesPage from './pages/topRatedMoviesPage';
 import NowPlayingMoviesPage from './pages/nowPlayingMoviesPage';
+import PeoplePage from './pages/peoplePage';
+import PeopleDetailsPage from './pages/peopleDetailsPage'
+import PeopleImagesPage from './pages/peopleImagesPage'
 import { QueryClientProvider, QueryClient } from "react-query";
+import MustWatchMoviesPage from './pages/mustWatchMoviesPage';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import MoviesContextProvider from "./contexts/moviesContext";
 const queryClient = new QueryClient({
@@ -33,6 +37,10 @@ const App = () => {
           <Route path="/movies/upcoming" element={<UpcomingMoviesPage />}/>
           <Route path="/movies/nowPlaying" element={<NowPlayingMoviesPage />} />
           <Route path="/movies/topRated" element={<TopRatedMoviesPage />} />
+          <Route path="/people/:id/images" element={<PeopleImagesPage />} />
+          <Route path="/people/:id" element={<PeopleDetailsPage />} />
+          <Route path="/people/page/:page" element={<PeoplePage />} />
+          <Route path="/movies/mustWatch" element={<MustWatchMoviesPage />} />
           <Route path="/reviews/:id" element={ <MovieReviewPage /> } />
           <Route path="/movies/:id" element={<MoviePage />} />
           <Route path="/" element={<HomePage />} />

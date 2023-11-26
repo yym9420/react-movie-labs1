@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from 'react-router-dom';
-import PeopleImages from "../components/PeopleImages/";
+import PeopleImages from "../components/peopleImages/";
 import { getPeople, getPeopleImages } from '../api/tmdb-api'
 import { useQuery } from "react-query";
 import Spinner from '../components/spinner'
